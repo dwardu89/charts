@@ -61,9 +61,13 @@
     - name: DD_PROCESS_AGENT_ENABLED
       value: {{ .Values.datadog.processAgentEnabled | quote }}
     {{- end }}
-    {{- if .Values.datadog.hostname }}
     - name: DD_HOSTNAME
+    {{- if .Values.datadog.hostname }}
       value: {{ .Values.datadog.hostname | quote }}
+    {{- else }}
+      valueFrom:
+        fieldRef:
+          fieldPath: spec.nodeName
     {{- end }}
     {{- if .Values.datadog.acInclude }}
     - name: DD_AC_INCLUDE

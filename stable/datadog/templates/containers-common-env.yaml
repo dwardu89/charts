@@ -12,9 +12,13 @@
     fieldRef:
       fieldPath: status.hostIP
 {{- end }}
-{{- if .Values.datadog.hostname }}
 - name: DD_HOSTNAME
+{{- if .Values.datadog.hostname }}
   value: {{ .Values.datadog.hostname | quote }}
+{{- else }}
+  valueFrom:
+    fieldRef:
+      fieldPath: spec.nodeName
 {{- end }}
 {{- if .Values.datadog.tags }}
 - name: DD_TAGS
